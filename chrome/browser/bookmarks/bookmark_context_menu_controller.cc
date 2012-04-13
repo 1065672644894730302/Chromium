@@ -14,6 +14,8 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/browser_list.h"
+#include "chrome/browser/ui/browser_navigator.h"
 #include "chrome/common/pref_names.h"
 #include "content/public/browser/page_navigator.h"
 #include "content/public/browser/user_metrics.h"
@@ -56,7 +58,7 @@ void BookmarkContextMenuController::BuildMenu() {
             IDS_BOOKMARK_BAR_OPEN_IN_NEW_TAB);
     AddItem(IDC_BOOKMARK_BAR_OPEN_ALL_NEW_WINDOW,
             IDS_BOOKMARK_BAR_OPEN_IN_NEW_WINDOW);
-    AddItem(IDC_BOOKMARK_BAR_OPEN_ALL_INCOGNITO,
+    AddItem(IDC_BOOKMARK_BAR_OPEN_INCOGNITO,
             IDS_BOOKMARK_BAR_OPEN_INCOGNITO);
   } else {
     AddItem(IDC_BOOKMARK_BAR_OPEN_ALL, IDS_BOOKMARK_BAR_OPEN_ALL);
@@ -110,7 +112,8 @@ void BookmarkContextMenuController::ExecuteCommand(int id) {
   switch (id) {
     case IDC_BOOKMARK_BAR_OPEN_ALL:
     case IDC_BOOKMARK_BAR_OPEN_ALL_INCOGNITO:
-    case IDC_BOOKMARK_BAR_OPEN_ALL_NEW_WINDOW: {
+    case IDC_BOOKMARK_BAR_OPEN_ALL_NEW_WINDOW:
+    case IDC_BOOKMARK_BAR_OPEN_INCOGNITO: {
       WindowOpenDisposition initial_disposition;
       if (id == IDC_BOOKMARK_BAR_OPEN_ALL) {
         initial_disposition = NEW_BACKGROUND_TAB;
@@ -256,7 +259,8 @@ bool BookmarkContextMenuController::IsCommandIdEnabled(int command_id) const {
   switch (command_id) {
     case IDC_BOOKMARK_BAR_OPEN_INCOGNITO:
       return !profile_->IsOffTheRecord() &&
-             incognito_avail != IncognitoModePrefs::DISABLED;
+             incognito_avail != IncognitoModePrefs::DISABLED &&
+             browser::IsURLAllowedInIncognito(selection_[0]->url());
 
     case IDC_BOOKMARK_BAR_OPEN_ALL_INCOGNITO:
       return HasURLs() &&
