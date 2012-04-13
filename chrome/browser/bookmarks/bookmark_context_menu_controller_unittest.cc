@@ -87,6 +87,7 @@ class BookmarkContextMenuControllerTest : public testing::Test {
   // F3
   // F4
   //   f4a
+  // help (chrome://chrome/help/")
   void AddTestData() {
     const BookmarkNode* bb_node = model_->bookmark_bar_node();
     std::string test_base = "file:///c:/tmp/";
@@ -99,6 +100,9 @@ class BookmarkContextMenuControllerTest : public testing::Test {
     model_->AddFolder(bb_node, 3, ASCIIToUTF16("F3"));
     const BookmarkNode* f4 = model_->AddFolder(bb_node, 4, ASCIIToUTF16("F4"));
     model_->AddURL(f4, 0, ASCIIToUTF16("f4a"), GURL(test_base + "f4a"));
+
+    std::string help_page_url = "chrome://chrome/help/";
+    model_->AddURL(bb_node, 5, ASCIIToUTF16("help"), GURL(help_page_url));
   }
 };
 
@@ -252,6 +256,16 @@ TEST_F(BookmarkContextMenuControllerTest, DisableIncognito) {
   EXPECT_FALSE(controller.IsCommandIdEnabled(IDC_BOOKMARK_BAR_OPEN_INCOGNITO));
   EXPECT_FALSE(
       controller.IsCommandIdEnabled(IDC_BOOKMARK_BAR_OPEN_ALL_INCOGNITO));
+  profile_->set_incognito(false);
+  EXPECT_TRUE(controller.IsCommandIdEnabled(IDC_BOOKMARK_BAR_OPEN_INCOGNITO));
+  EXPECT_TRUE(
+      controller.IsCommandIdEnabled(IDC_BOOKMARK_BAR_OPEN_ALL_INCOGNITO));
+
+  nodes.pop_back();
+  nodes.push_back(model_->bookmark_bar_node()->GetChild(5));
+  BookmarkContextMenuController controller1(
+      NULL, NULL, profile_.get(), NULL, nodes[0]->parent(), nodes);
+  EXPECT_FALSE(controller1.IsCommandIdEnabled(IDC_BOOKMARK_BAR_OPEN_INCOGNITO));
 }
 
 // Tests that you can't remove/edit when showing the other node.
