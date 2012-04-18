@@ -11,6 +11,7 @@
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/bookmarks/bookmark_utils.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/common/url_constants.cc"
 #include "chrome/test/base/testing_profile.h"
 #include "content/public/browser/page_navigator.h"
 #include "content/test/test_browser_thread.h"
@@ -87,7 +88,7 @@ class BookmarkContextMenuControllerTest : public testing::Test {
   // F3
   // F4
   //   f4a
-  // help (chrome://chrome/help/")
+  // help (chrome://chrome/")
   void AddTestData() {
     const BookmarkNode* bb_node = model_->bookmark_bar_node();
     std::string test_base = "file:///c:/tmp/";
@@ -100,9 +101,7 @@ class BookmarkContextMenuControllerTest : public testing::Test {
     model_->AddFolder(bb_node, 3, ASCIIToUTF16("F3"));
     const BookmarkNode* f4 = model_->AddFolder(bb_node, 4, ASCIIToUTF16("F4"));
     model_->AddURL(f4, 0, ASCIIToUTF16("f4a"), GURL(test_base + "f4a"));
-
-    std::string help_page_url = "chrome://chrome/help/";
-    model_->AddURL(bb_node, 5, ASCIIToUTF16("help"), GURL(help_page_url));
+    model_->AddURL(bb_node, 5, ASCIIToUTF16("help"), GURL(chrome::kChromeUIUberURL));
   }
 };
 
