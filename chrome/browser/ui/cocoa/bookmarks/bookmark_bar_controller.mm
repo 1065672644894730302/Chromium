@@ -19,6 +19,7 @@
 #import "chrome/browser/themes/theme_service_factory.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
+#include "chrome/browser/ui/browser_navigator.h"
 #import "chrome/browser/ui/cocoa/background_gradient_view.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_bar_bridge.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_bar_folder_controller.h"
@@ -1090,8 +1091,15 @@ void RecordAppLaunch(Profile* profile, GURL url) {
 
   Profile* profile = browser_->profile();
   // If this is an incognito window, don't allow "open in incognito".
-  if ((action == @selector(openBookmarkInIncognitoWindow:)) ||
-      (action == @selector(openAllBookmarksIncognitoWindow:))) {
+  if (action == @selector(openBookmarkInIncognitoWindow:)) {
+    if (profile->IsOffTheRecord() ||
+        !browser::IsURLAllowedInIncognito(node->url()) ||
+        IncognitoModePrefs::GetAvailability(profile->GetPrefs()) ==
+            IncognitoModePrefs::DISABLED) {
+      return NO;
+    }
+  }
+  if (action == @selector(openAllBookmarksIncognitoWindow:)) {
     if (profile->IsOffTheRecord() ||
         IncognitoModePrefs::GetAvailability(profile->GetPrefs()) ==
             IncognitoModePrefs::DISABLED) {
