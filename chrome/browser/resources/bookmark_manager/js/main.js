@@ -897,25 +897,26 @@ function updateOpenCommands(e, command) {
 	    case 'open-incognito-window-command':
 	      command.label = loadTimeData.getString(multiple ?
 	          'open_all_incognito' : 'open_incognito');
-	      chrome.experimental.bookmarkManager.isURLAllowedInIncognito(selectedItem.url, function(result) {
+	      chrome.experimental.bookmarkManager.isURLAllowedInIncognito(selectedItem.url,
+	                                                                  function(result) {
 	        // If incognito mode is disabled (preference) or if the URL
 	        // cannot be opened in incognito mode, disable it.
           canOpenInIncognito = result;
           commandDisabled = incognitoModeAvailability == 'disabled' ||
           !canOpenInIncognito;
-	      });
-	      break;
-	  }
+        });
+        break;
+    }
   }
-	e.canExecute = selectionCount > 0 && !!selectedItem && !commandDisabled;
-	if (isFolder && e.canExecute) {
-	  // We need to get all the bookmark items in this tree. If the tree does not
-	  // contain any non-folders, we need to disable the command.
-	  var p = bmm.loadSubtree(selectedItem.id);
-	  p.addListener(function(node) {
-	    command.disabled = !node || !hasBookmarks(node);
-	  });
-	}
+  e.canExecute = selectionCount > 0 && !!selectedItem && !commandDisabled;
+  if (isFolder && e.canExecute) {
+    // We need to get all the bookmark items in this tree. If the tree does not
+    // contain any non-folders, we need to disable the command.
+    var p = bmm.loadSubtree(selectedItem.id);
+    p.addListener(function(node) {
+      command.disabled = !node || !hasBookmarks(node);
+    });
+  }
 }
 
 /**
