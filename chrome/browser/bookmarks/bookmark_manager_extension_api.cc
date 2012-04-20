@@ -22,6 +22,8 @@
 #include "chrome/browser/ui/tab_contents/tab_contents_wrapper.h"
 #include "chrome/browser/ui/webui/chrome_url_data_manager.h"
 #include "chrome/browser/view_type_utils.h"
+#include "chrome/browser/ui/browser_navigator.h"
+#include "chrome/common/chrome_view_type.h"
 #include "chrome/common/pref_names.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
@@ -498,5 +500,13 @@ bool CanEditBookmarkManagerFunction::RunImpl() {
 
 bool RecordLaunchBookmarkFunction::RunImpl() {
   bookmark_utils::RecordBookmarkLaunch(bookmark_utils::LAUNCH_MANAGER);
+  return true;
+}
+
+bool IsURLAllowedInIncognitoFunction::RunImpl() {
+  std::string url;
+  EXTENSION_FUNCTION_VALIDATE(args_->GetString(0, &url));
+  result_.reset(Value::CreateBooleanValue(
+      browser::IsURLAllowedInIncognito(GURL(url))));
   return true;
 }

@@ -209,6 +209,25 @@
             {"name": "result", "type": "boolean"}
           ]}
         ]
+      },
+      {
+        "name": "isURLAllowedInIncognito",
+        "type": "function",
+        "description": "Whether the supplied URL can be opened in Incognito mode or not.",
+        "nodoc": "true",
+        "parameters": [
+          {
+            "name": "url",
+            "type": "string"
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {"name": "result", "type": "boolean"}
+            ]
+          }
+        ]
       }
     ],
     "events": [
