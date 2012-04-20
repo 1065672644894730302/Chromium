@@ -179,6 +179,7 @@ void ExtensionFunctionRegistry::ResetFunctions() {
   RegisterFunction<DropBookmarkManagerFunction>();
   RegisterFunction<GetSubtreeBookmarkManagerFunction>();
   RegisterFunction<CanEditBookmarkManagerFunction>();
+  RegisterFunction<IsURLAllowedInIncognitoFunction>();
 
   // History
   RegisterFunction<AddUrlHistoryFunction>();

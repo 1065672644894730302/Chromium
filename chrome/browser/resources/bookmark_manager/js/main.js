@@ -880,35 +880,42 @@ function updateOpenCommands(e, command) {
     return false;
   }
 
-  var commandDisabled = false;
-  switch (command.id) {
-    case 'open-in-new-tab-command':
-      command.label = loadTimeData.getString(multiple ?
-          'open_all' : 'open_in_new_tab');
-      break;
+  if (selectedItem) {
+	  var commandDisabled = false;
+	  switch (command.id) {
+	    case 'open-in-new-tab-command':
+	      command.label = loadTimeData.getString(multiple ?
+	          'open_all' : 'open_in_new_tab');
+	      break;
 
-    case 'open-in-new-window-command':
-      command.label = loadTimeData.getString(multiple ?
-          'open_all_new_window' : 'open_in_new_window');
-      // Disabled when incognito is forced.
-      commandDisabled = incognitoModeAvailability == 'forced';
-      break;
-    case 'open-incognito-window-command':
-      command.label = loadTimeData.getString(multiple ?
-          'open_all_incognito' : 'open_incognito');
-      // Not available withn incognito is disabled.
-      commandDisabled = incognitoModeAvailability == 'disabled';
-      break;
+	    case 'open-in-new-window-command':
+	      command.label = loadTimeData.getString(multiple ?
+	          'open_all_new_window' : 'open_in_new_window');
+	      // Disabled when incognito is forced.
+	      commandDisabled = incognitoModeAvailability == 'forced';
+	      break;
+	    case 'open-incognito-window-command':
+	      command.label = loadTimeData.getString(multiple ?
+	          'open_all_incognito' : 'open_incognito');
+	      chrome.experimental.bookmarkManager.isURLAllowedInIncognito(selectedItem.url, function(result) {
+	        // If incognito mode is disabled (preference) or if the URL
+	        // cannot be opened in incognito mode, disable it.
+          canOpenInIncognito = result;
+          commandDisabled = incognitoModeAvailability == 'disabled' ||
+          !canOpenInIncognito;
+	      });
+	      break;
+	  }
   }
-  e.canExecute = selectionCount > 0 && !!selectedItem && !commandDisabled;
-  if (isFolder && e.canExecute) {
-    // We need to get all the bookmark items in this tree. If the tree does not
-    // contain any non-folders, we need to disable the command.
-    var p = bmm.loadSubtree(selectedItem.id);
-    p.addListener(function(node) {
-      command.disabled = !node || !hasBookmarks(node);
-    });
-  }
+	e.canExecute = selectionCount > 0 && !!selectedItem && !commandDisabled;
+	if (isFolder && e.canExecute) {
+	  // We need to get all the bookmark items in this tree. If the tree does not
+	  // contain any non-folders, we need to disable the command.
+	  var p = bmm.loadSubtree(selectedItem.id);
+	  p.addListener(function(node) {
+	    command.disabled = !node || !hasBookmarks(node);
+	  });
+	}
 }
 
 /**

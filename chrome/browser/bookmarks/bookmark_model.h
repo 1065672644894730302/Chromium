@@ -245,7 +245,7 @@ class BookmarkModel : public content::NotificationObserver,
   void AddObserver(BookmarkModelObserver* observer);
   void RemoveObserver(BookmarkModelObserver* observer);
 
-  // Notifies the observers that that an extensive set of changes is about to
+  // Notifies the observers that an extensive set of changes is about to
   // happen, such as during import or sync, so they can delay any expensive
   // UI updates until it's finished.
   void BeginExtensiveChanges();

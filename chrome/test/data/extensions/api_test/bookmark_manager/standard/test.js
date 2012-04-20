@@ -298,6 +298,15 @@ var tests = [
     bookmarkManager.canEdit(pass(function(result) {
       assertTrue(result, 'Should be able to edit bookmarks');
     }));
+  },
+
+  function isURLAllowedInIncognito() {
+    bookmarkManager.isURLAllowedInIncognito("http://google.ca", pass(function(result) {
+      assertTrue(result, 'URL should be able to open in Incognito');
+    }));
+    bookmarkManager.isURLAllowedInIncognito("chrome://chrome", pass(function(result) {
+      assertTrue(!result, 'URL should not be able to open in Incognito');
+    }));
   }
 ];
 
