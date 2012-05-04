@@ -897,14 +897,12 @@ function updateOpenCommands(e, command) {
 	    case 'open-incognito-window-command':
 	      command.label = loadTimeData.getString(multiple ?
 	          'open_all_incognito' : 'open_incognito');
-	      chrome.experimental.bookmarkManager.isURLAllowedInIncognito(selectedItem.url,
-	                                                                  function(result) {
-	        // If incognito mode is disabled (preference) or if the URL
-	        // cannot be opened in incognito mode, disable it.
-          canOpenInIncognito = result;
-          commandDisabled = incognitoModeAvailability == 'disabled' ||
-          !canOpenInIncognito;
-        });
+	      // If incognito mode is disabled (preference) or if the URL
+	      // cannot be opened in incognito mode, disable it.
+	      canOpenInIncognito =
+	        window.chrome.app.isURLAllowedInIncognito(selectedItem.url);
+        commandDisabled = incognitoModeAvailability == 'disabled' ||
+                          !canOpenInIncognito;
         break;
     }
   }

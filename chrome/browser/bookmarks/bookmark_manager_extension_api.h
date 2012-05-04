@@ -63,8 +63,6 @@ class ClipboardBookmarkManagerFunction : public BookmarksFunction {
 class CopyBookmarkManagerFunction : public ClipboardBookmarkManagerFunction {
  public:
 
-  virtual bool RunImpl() OVERRIDE;
-
   DECLARE_EXTENSION_FUNCTION_NAME("experimental.bookmarkManager.copy");
 
  protected:
@@ -76,8 +74,6 @@ class CopyBookmarkManagerFunction : public ClipboardBookmarkManagerFunction {
 
 class CutBookmarkManagerFunction : public ClipboardBookmarkManagerFunction {
  public:
-
-  virtual bool RunImpl() OVERRIDE;
 
   DECLARE_EXTENSION_FUNCTION_NAME("experimental.bookmarkManager.cut");
 
@@ -91,8 +87,6 @@ class CutBookmarkManagerFunction : public ClipboardBookmarkManagerFunction {
 class PasteBookmarkManagerFunction : public BookmarksFunction {
  public:
 
-  virtual bool RunImpl() OVERRIDE;
-
   DECLARE_EXTENSION_FUNCTION_NAME("experimental.bookmarkManager.paste");
 
  protected:
@@ -104,8 +98,6 @@ class PasteBookmarkManagerFunction : public BookmarksFunction {
 
 class CanPasteBookmarkManagerFunction : public BookmarksFunction {
  public:
-
-  virtual bool RunImpl() OVERRIDE;
 
   DECLARE_EXTENSION_FUNCTION_NAME("experimental.bookmarkManager.canPaste");
 
@@ -119,8 +111,6 @@ class CanPasteBookmarkManagerFunction : public BookmarksFunction {
 class SortChildrenBookmarkManagerFunction : public BookmarksFunction {
  public:
 
-  virtual bool RunImpl() OVERRIDE;
-
   DECLARE_EXTENSION_FUNCTION_NAME("experimental.bookmarkManager.sortChildren");
 
  protected:
@@ -132,8 +122,6 @@ class SortChildrenBookmarkManagerFunction : public BookmarksFunction {
 
 class BookmarkManagerGetStringsFunction : public AsyncExtensionFunction {
  public:
-
-  virtual bool RunImpl() OVERRIDE;
 
   DECLARE_EXTENSION_FUNCTION_NAME("experimental.bookmarkManager.getStrings");
 
@@ -147,8 +135,6 @@ class BookmarkManagerGetStringsFunction : public AsyncExtensionFunction {
 class StartDragBookmarkManagerFunction : public BookmarksFunction {
  public:
 
-  virtual bool RunImpl() OVERRIDE;
-
   DECLARE_EXTENSION_FUNCTION_NAME("experimental.bookmarkManager.startDrag");
 
  protected:
@@ -160,8 +146,6 @@ class StartDragBookmarkManagerFunction : public BookmarksFunction {
 
 class DropBookmarkManagerFunction : public BookmarksFunction {
  public:
-
-  virtual bool RunImpl() OVERRIDE;
 
   DECLARE_EXTENSION_FUNCTION_NAME("experimental.bookmarkManager.drop");
 
@@ -175,8 +159,6 @@ class DropBookmarkManagerFunction : public BookmarksFunction {
 class GetSubtreeBookmarkManagerFunction : public BookmarksFunction {
  public:
 
-  virtual bool RunImpl() OVERRIDE;
-
   DECLARE_EXTENSION_FUNCTION_NAME("experimental.bookmarkManager.getSubtree");
 
  protected:
@@ -188,8 +170,6 @@ class GetSubtreeBookmarkManagerFunction : public BookmarksFunction {
 
 class CanEditBookmarkManagerFunction : public BookmarksFunction {
  public:
-
-  virtual bool RunImpl() OVERRIDE;
 
   DECLARE_EXTENSION_FUNCTION_NAME("experimental.bookmarkManager.canEdit");
 
@@ -203,8 +183,6 @@ class CanEditBookmarkManagerFunction : public BookmarksFunction {
 class RecordLaunchBookmarkFunction : public BookmarksFunction {
  public:
 
-  virtual bool RunImpl() OVERRIDE;
-
   DECLARE_EXTENSION_FUNCTION_NAME("experimental.bookmarkManager.recordLaunch")
 
  protected:
@@ -212,12 +190,6 @@ class RecordLaunchBookmarkFunction : public BookmarksFunction {
 
   // ExtensionFunction:
   virtual bool RunImpl() OVERRIDE;
-};
-
-class IsURLAllowedInIncognitoFunction : public SyncExtensionFunction {
- public:
-  virtual bool RunImpl() OVERRIDE;
-  DECLARE_EXTENSION_FUNCTION_NAME("experimental.bookmarkManager.isURLAllowedInIncognito")
 };
 
 #endif  // CHROME_BROWSER_BOOKMARKS_BOOKMARK_MANAGER_EXTENSION_API_H_

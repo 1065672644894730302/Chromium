@@ -9,6 +9,7 @@
 #include "base/string_util.h"
 #include "base/utf_string_conversions.h"
 #include "base/values.h"
+#include "chrome/browser/ui/browser_navigator.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/extension_messages.h"
 #include "chrome/common/extensions/extension_set.h"
@@ -62,6 +63,8 @@ AppBindings::AppBindings(ExtensionDispatcher* dispatcher,
       ChromeV8ExtensionHandler(context) {
   RouteFunction("GetIsInstalled",
       base::Bind(&AppBindings::GetIsInstalled, base::Unretained(this)));
+  RouteFunction("IsURLAllowedInIncognito",
+      base::Bind(&AppBindings::IsURLAllowedInIncognito, base::Unretained(this)));
   RouteFunction("Install",
       base::Bind(&AppBindings::Install, base::Unretained(this)));
   RouteFunction("GetDetails",
@@ -83,6 +86,18 @@ v8::Handle<v8::Value> AppBindings::GetIsInstalled(
   // TODO(aa): Why only hosted app?
   bool result = extension && extension->is_hosted_app() &&
       extension_dispatcher_->IsExtensionActive(extension->id());
+  return v8::Boolean::New(result);
+}
+
+v8::Handle<v8::Value> AppBindings::IsURLAllowedInIncognito(
+    const v8::Arguments& args) {
+  if (!args[0]->IsString()) {
+      return v8::ThrowException(
+          v8::String::New("Argument 0 must be a string."));
+  }
+  v8::String::Utf8Value v8URL(args[0]->ToString());
+  std::string url(*v8URL);
+  bool result = browser::IsURLAllowedInIncognito(GURL(url));
   return v8::Boolean::New(result);
 }
 

@@ -31,6 +31,7 @@ class AppBindings : public ChromeV8Extension, public ChromeV8ExtensionHandler {
   virtual bool OnMessageReceived(const IPC::Message& message) OVERRIDE;
 
   v8::Handle<v8::Value> GetIsInstalled(const v8::Arguments& args);
+  v8::Handle<v8::Value> IsURLAllowedInIncognito(const v8::Arguments& args);
   v8::Handle<v8::Value> Install(const v8::Arguments& args);
   v8::Handle<v8::Value> GetDetails(const v8::Arguments& args);
   v8::Handle<v8::Value> GetDetailsForFrame(const v8::Arguments& args);
