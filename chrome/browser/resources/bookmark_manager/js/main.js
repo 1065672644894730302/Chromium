@@ -9,7 +9,7 @@
 /** @const */ var LinkKind = cr.LinkKind;
 /** @const */ var ListItem = cr.ui.ListItem;
 /** @const */ var Menu = cr.ui.Menu;
-/** @const */ var MenuButton  = cr.ui.MenuButton;
+/** @const */ var MenuButton = cr.ui.MenuButton;
 /** @const */ var Promise = cr.Promise;
 /** @const */ var Splitter = cr.ui.Splitter;
 /** @const */ var TreeItem = cr.ui.TreeItem;
@@ -31,9 +31,9 @@ chrome.experimental.bookmarkManager.getStrings(function(data) {
   recentTreeItem.label = loadTimeData.getString('recent');
   searchTreeItem.label = loadTimeData.getString('search');
   if (!isRTL())
-    searchTreeItem.icon = 'images/bookmark_manager_search.png'
+    searchTreeItem.icon = 'images/bookmark_manager_search.png';
   else
-    searchTreeItem.icon = 'images/bookmark_manager_search_rtl.png'
+    searchTreeItem.icon = 'images/bookmark_manager_search_rtl.png';
 });
 
 /**
@@ -201,7 +201,7 @@ function processHash() {
         updateParentId(id);
     });
   }
-};
+}
 
 // We listen to hashchange so that we can update the currently shown folder when
 // the user goes back and forward in the history.
@@ -653,7 +653,7 @@ var dnd = {
         rect.width = labelRect.left + labelRect.width - rect.left;
       } else {
         rect.left = labelRect.left;
-        rect.width -= rect.left
+        rect.width -= rect.left;
       }
     }
 
