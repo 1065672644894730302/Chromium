@@ -101,7 +101,8 @@ class BookmarkContextMenuControllerTest : public testing::Test {
     model_->AddFolder(bb_node, 3, ASCIIToUTF16("F3"));
     const BookmarkNode* f4 = model_->AddFolder(bb_node, 4, ASCIIToUTF16("F4"));
     model_->AddURL(f4, 0, ASCIIToUTF16("f4a"), GURL(test_base + "f4a"));
-    model_->AddURL(bb_node, 5, ASCIIToUTF16("help"), GURL(chrome::kChromeUIUberURL));
+    model_->AddURL(bb_node, 5, ASCIIToUTF16("help"),
+                   GURL(chrome::kChromeUIUberURL));
   }
 };
 
