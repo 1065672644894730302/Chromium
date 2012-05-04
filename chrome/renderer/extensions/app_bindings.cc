@@ -64,7 +64,8 @@ AppBindings::AppBindings(ExtensionDispatcher* dispatcher,
   RouteFunction("GetIsInstalled",
       base::Bind(&AppBindings::GetIsInstalled, base::Unretained(this)));
   RouteFunction("IsURLAllowedInIncognito",
-      base::Bind(&AppBindings::IsURLAllowedInIncognito, base::Unretained(this)));
+      base::Bind(&AppBindings::IsURLAllowedInIncognito,
+      base::Unretained(this)));
   RouteFunction("Install",
       base::Bind(&AppBindings::Install, base::Unretained(this)));
   RouteFunction("GetDetails",
