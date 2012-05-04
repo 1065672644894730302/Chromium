@@ -9,6 +9,7 @@ var appNatives = requireNative('app');
 // This becomes chrome.app
 var app = {
   getIsInstalled: appNatives.GetIsInstalled,
+  isURLAllowedInIncognito: appNatives.IsURLAllowedInIncognito,
   install: appNatives.Install,
   getDetails: appNatives.GetDetails,
   getDetailsForFrame: appNatives.GetDetailsForFrame,
